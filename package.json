@@ -9,18 +9,19 @@
 	},
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"build": "wrangler types --check && vite build",
+		"preview": "wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check": "wrangler types --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test": "vitest"
+		"test": "vitest",
+		"gen": "wrangler types"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@sveltejs/adapter-auto": "^8.0.1",
+		"@sveltejs/adapter-cloudflare": "^8.0.2",
 		"@sveltejs/kit": "^3.2.0",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@types/node": "^26",
@@ -35,7 +36,8 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.72.2",
 		"vite": "^8.3.8",
-		"vitest": "^5.1.1"
+		"vitest": "^5.1.1",
+		"wrangler": "^4.162.0"
 	},
 	"dependencies": {
 		"@humanspeak/svelte-markdown": "^2.3.0"
