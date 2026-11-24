@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { parseNotes } from '#lib/note-parser';
+	import { parseNotes } from '#lib/note-parser.ts';
+
 	import { browser } from '$app/env';
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 
@@ -44,7 +45,7 @@
             <h2>{note.title}</h2>
         {/if}
         {#each note.blocks as block, idx(idx)}
-            <section class:simple={block.paras.length < 2}>
+            <section class:with-title={block.title}>
                 {#if block.title}
                     <h3>{block.title}</h3>
                 {/if}
@@ -69,6 +70,9 @@
         width: 50dvw;
         height: 100%;
         font-size: large;
+        background-color: var(--alternate-background-color);
+        height: 80dvh;
+        color: var(--text-color);
     }
 
     div.articles {
@@ -79,9 +83,11 @@
     }
 
     article {
-        border: 0.25em groove black;
+        border-width: 0.25em;
+        border-style: groove;
+        border-color: var(--border-color);
         display: inline-block;
-        box-shadow: 0.25em 0.25em 0.1em gray;
+        box-shadow: 0.25em 0.25em 0.2em var(--shadow-color);
         border-radius: 0.5em;
         padding: 0.5em;
         width: 20em;
@@ -93,18 +99,18 @@
         border-top: 0.10em solid gray;
     }
 
-    section.simple h3 {
+    section h3 {
         display: inline;
         font-size: normal;
         font-weight: bold;
         margin: 0;
     }
 
-    section.simple p {
+    section.with-title p:first-of-type {
         display: inline;
     }
 
-    section.simple h3::after {
+    section h3::after {
         content: ':'
     }
 
@@ -115,5 +121,6 @@
 
     h2, h3 {
         text-align: center;
+        color: var(--heading-color);
     }
 </style>
