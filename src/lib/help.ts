@@ -20,7 +20,7 @@ Block titles: these are also possible, here the first line of a block should con
 ---
 You may have noticed that in the previous note I used two colons but only one was displayed. You can use a double-colon to avoid mistakenly marking something as a title when all you wanted was to type ::
 ---
-You can also use simple Markdown to _highlight_ --certain-- **words** or [link](https:://kozterulethasznalatienge.day) to other websites.
+You can also use simple Markdown to _highlight_ ~~certain~~ **words** or [link](https:://kozterulethasznalatienge.day) to other websites.
 ---
 Oh, and clicking on a note card will highlight its source text in the editor.
 
