@@ -1,3 +1,3 @@
-- figure out how to put a : in the first line without making it a title
-- help
-- multiple files
+- link style
+- delete notesz
+- handle notesz list overflow

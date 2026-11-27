@@ -27,6 +27,12 @@ describe('parseNotes', () => {
         expect(uut).toEqual([{ title: 'asdf', blocks: [], start: 0 }]);
     });
 
+    it('escapes note title', () => {
+        const uut = parseNotes('::asdf');
+        expect(uut).toEqual([{ blocks: [{ paras: [':asdf']}], start: 0 }]);
+    });
+
+
 
     it('parses block title', () => {
         const uut = parseNotes('my title: asdf\nxvcf\nqwer');
@@ -37,6 +43,17 @@ describe('parseNotes', () => {
             start: 0
         }]);
     });
+
+    it('escapes block title', () => {
+        const uut = parseNotes('my title::asdf\nxvcf\nqwer');
+        expect(uut).toEqual([{
+            blocks: [
+                { paras: ["my title:asdf", "xvcf", "qwer"] },
+            ],
+            start: 0
+        }]);
+    });
+
 
     it('parses fake block title', () => {
         const uut = parseNotes('asdf\nfake title: xvcf\nqwer');

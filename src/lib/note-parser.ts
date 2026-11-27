@@ -12,6 +12,10 @@ export interface Block {
 const isSeparator = (line: string) => !!line.trim().match(/^-(-)+$/g);
 const isEmpty = (line: string) => line.trim().length === 0;
 
+const SINGLE_COLON = /(?<!:):(?!:)/;
+
+const filterDoubleColon = (str: string) => str.replaceAll(/:+/g, ':');
+
 export const parseNotes = (str: string): Note[] => {
     const lines = str.split('\n');
     const ret: Note[] = [];
@@ -47,18 +51,20 @@ export const parseNotes = (str: string): Note[] => {
         if (isEmpty(line)) {
                 addBlock();
         } else {
+            const isFirstLineOfNote = currentNote.blocks.length === 0;
+            const isFirstLineOfBlock = currentBlock.paras.length === 0;
             if (isSeparator(line)) {  
                 addNote();
-            } else if (currentBlock.paras.length === 0 && currentNote.blocks.length === 0 && line.startsWith(':')) {
+            } else if (isFirstLineOfBlock && isFirstLineOfNote && line.match(SINGLE_COLON)?.index === 0) {
                 currentNote.title = line.slice(1);
-            } else if (currentBlock.paras.length === 0 && line.includes(':')) {
-                const [title, rest] = line.split(':', 2);
+            } else if (isFirstLineOfBlock && line.match(SINGLE_COLON)) {
+                const [title, rest] = line.split(SINGLE_COLON, 2);
                 currentBlock.title = title;
                 if (rest.trim().length > 0) {
-                    currentBlock.paras.push(rest.trim());
+                    currentBlock.paras.push(filterDoubleColon(rest.trim()));
                 }
             } else {
-                currentBlock.paras.push(line.trim());
+                currentBlock.paras.push(filterDoubleColon(line.trim()));
 
             }
         } 
